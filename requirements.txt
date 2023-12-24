@@ -1,0 +1,15 @@
+openai
+qdrant-client
+# langchain
+# pypdf
+tiktoken
+# llama-index
+# requests==2.31.0
+python-dotenv
+# deepl
+youtube_dl
+# markdown2
+# FPDF
+pdfkit
+markdown
+youtube_transcript_api

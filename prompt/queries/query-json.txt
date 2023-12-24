@@ -1,0 +1,22 @@
+"""Analyze the provided image result /n {{result}} /n and output a JSON response detailing the object's size, shape, color, surrounding environment, and the optimal grasping position for a robotic arm.
+According to example create json format, and output only json without any words. And "image_processing_by_gpt4v" is necessary key, others are whatever you want.そしてkeyは英語で、内容は日本語で答えてください。
+
+example：
+{
+  "image_processing_by_gpt4v": {
+    "size": "15cm x 10cm x 8cm",
+    "shape": "Rectangular prism",
+    "color": "Blue with white stripes",
+    "surrounding_environment": "Located on a wooden table, near a window with natural light",
+    "grasping_rule": "Located on a wooden table, near a window with natural light",
+    "robotic_arm_grasping_position": {
+      "x_coordinate": 7.5,
+      "y_coordinate": 5,
+      "z_coordinate": 4,
+      "orientation": "Horizontal grasp from the top"
+    },
+    "Reasons of grasping position": "It's thin and it's the position of upper than grapes. Based on your rule, that's the position of grasping. ",
+  }
+}
+
+"""

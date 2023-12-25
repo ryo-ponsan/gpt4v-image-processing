@@ -237,17 +237,17 @@ def main():
 
 
 
-    # messages = []
-    # messages.append({"role": "system", "content": system_prompt})
-    # response = get_json_from_messages(messages)
+    messages = []
+    messages.append({"role": "system", "content": system_prompt})
+    response2 = get_json_from_messages(messages)
 
     # print("=================================1のjson結果===============================")
-    # messages.append({"role": "user", "content": query_json.format(result=response1)})
-    # response = get_completion_from_messages(messages)
-    # print("message:")
-    # print(query_json.format(result=response1))
-    # print("GPT:")
-    # print(response)
+    messages.append({"role": "user", "content": query_json.format(result=response2)})
+    response = get_completion_from_messages(messages)
+    print("message:")
+    print(query_json.format(result=response2))
+    print("GPT:")
+    print(response)
 
 
     # print("=================================3のjson結果.2枚の比較===============================")

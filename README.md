@@ -1,63 +1,53 @@
-# GPT-4 Vision API ユーティリティ
+# README: OpenAI APIを使用した画像処理と分析
 
-このリポジトリには、OpenAIのGPT-4 Vision APIを使用して画像を解析するためのユーティリティスクリプトが含まれています。これにより、画像からの情報抽出や、ロボットアームによるつかみ位置の決定などが可能になります。
+このPythonスクリプトは、OpenAIのGPT-4ビジョンAPIを使用して画像処理と分析を行うために設計されています。スクリプトには、画像エンコーディングの処理、OpenAI APIへのリクエスト送信、単一および比較画像分析のレスポンス処理の機能が含まれています。
 
-## 機能
+## 特徴
+- **画像エンコーディング**: ローカルの画像をAPI処理用のBase64形式に変換します。
+- **単一画像分析**: 単一の画像を分析し、OpenAI APIからのレスポンスを返します。
+- **比較画像分析**: 二つの画像を比較し、分析結果および詳細をAPIから取得します。
+- **JSONレスポンスのサポート**: JSON形式でのレスポンスをリクエストおよび処理する機能が含まれています。
 
-- URLまたはローカルの画像ファイルから画像を読み込み、GPT-4 Vision APIによる解析を実行
-- JSON形式での応答を生成
-- 画像比較機能を含む複数のAPIエンドポイントへのアクセス
+## 必要条件
+- Python 3
+- `openai` Pythonパッケージ
+- `requests` Pythonパッケージ
+- 環境管理のための`dotenv` Pythonパッケージ
+
+## セットアップ
+1. **必要なパッケージをインストール**:
+   ```
+   pip install openai requests python-dotenv
+   ```
+2. **`.env`ファイルを設定**:
+   - OpenAI APIキーをこのファイルに含めます: `OPENAI_API_KEY=あなたのAPIキー`
+
+## 関数
+- `encode_image(image_path)`: ローカル画像をBase64にエンコードします。
+- `get_gpt4v_response_from_encoded_image(base64_image, question, model)`: 単一画像をOpenAI APIに送信し、分析します。
+- `get_gpt4v_comparison_from_local_images(image_path1, image_path2, question, model)`: 二つの画像を比較分析するために送信します。
+- `get_completion_from_messages(messages, model, temperature)`: テキストプロンプトをAPIに送信する一般的な関数です。
+- `get_json_from_messages(messages, model, temperature)`: メッセージをAPIに送信し、JSON形式でのレスポンスをリクエストします。
+
+## Promptの概要
+- スクリプトは複数のプロンプトをサポートしています。これらは画像分析の精度を高めるために使用されます。
+- `query1`と`query2`は、それぞれ単一および複数画像の分析に関する質問を含んでいます。
+- `system`プロンプトは、ユーザーの役割を定義し、JSON出力の指示を提供します。
+- `query-json.txt`は、APIからの応答をJSON形式で整形するためのテンプレートを提供します。
 
 ## 使用方法
-(追記予定)
+- 入力画像とJSONファイルのパスを設定します。
+- 関連する関数を呼び出して画像またはテキストを処理します。
+- 応答を取得し、必要に応じて使用します。
 
-### 事前準備
-
-- OpenAIのAPIキーが必要です。`.env`ファイルに`OPENAI_API_KEY`として保存してください。
-- 必要なPythonパッケージをインストールしてください。例: `pip install openai dotenv requests`
-
-### スクリプトの実行
-
-`main()`関数は、様々なタイプのAPIリクエストを実行する例を提供しています。使用する前に、画像のURLまたはローカルファイルパスを指定してください。
-
-
-### APIリクエストのタイプ
-
-1. **URL画像の解析**  
-   `get_gpt4v_response_from_image`関数を使用して、URLで指定された画像の解析を行います。
-
-2. **ローカル画像の解析**  
-   `get_gpt4v_response_from_encoded_image`関数を使用して、Base64エンコードされたローカル画像の解析を行います。
-
-3. **2つの画像の比較**  
-   `get_gpt4v_comparison_from_images`関数を使用して、2つの画像間の違いを比較します。
-
-4. **2つのローカル画像の比較**  
-   `get_gpt4v_comparison_from_local_images`関数を使用して、2つのローカル画像間の違いを比較します。
-
-## JSON出力形式
-
-解析結果は、指定されたJSON形式で出力されます。以下に例を示します：
-
-```json
-{
-  "image_processing_by_gpt4v": {
-    "size": "サイズ情報",
-    "shape": "形状情報",
-    "color": "色情報",
-    "surrounding_environment": "周囲環境情報",
-    "grasping_rule": "つかみ位置に関するルール",
-    "robotic_arm_grasping_position": {
-      "x_coordinate": X座標,
-      "y_coordinate": Y座標,
-      "z_coordinate": Z座標,
-      "orientation": "つかみ方向"
-    },
-    "reasons_of_grasping_position": "つかみ位置の理由"
-  }
-}
+## 例
+```python
+image_path = "./data/grape1.png"
+base64_image = encode_image(image_path)
+response = get_gpt4v_response_from_encoded_image(base64_image, "この画像には何がありますか？")
+print(response)
 ```
 
----
-
-このREADMEは、スクリプトの基本的な使い方と機能を説明するためのものです。より詳細な情報や例は、スクリプト内のコメントやドキュメントを参照してください。
+## 追加の注意点
+- OpenAIのAPIキーが`.env`ファイルに正しく設定されていることを確認してください。
+- 特にクエリとモデルのパラメーターに応じて、スクリプトを特定の使用ケース
